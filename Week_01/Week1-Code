@@ -1,0 +1,97 @@
+/*
+ * [283] 移动零
+ */
+
+//Solution1: use two pointer, swap the non zero
+class Solution {
+    public void moveZeroes(final int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return;
+        }
+        int anchor  = 0;
+        for (int explorer = 0; explorer < nums.length; explorer++) {
+            if (nums[explorer] != 0) {
+                int temp = nums[anchor];
+                nums[anchor] = nums[explorer];
+                nums[explorer] = temp;
+                anchor++;
+            }
+        }
+    }
+}
+//Questions:
+/**
+ * Questions:
+ * 1. Why not capsulate swap in a method? 
+ * Java can only return one value at a time. 
+ * If want to return multiple values at a time, need to new an object. eg. swapItem.a; swapItem.b;
+ */
+
+// //Solution2: move all the zero as a snowball
+// class Solution {
+//     public void moveZeroes(final int[] nums) {
+//         if (nums == null || nums.length == 0) {
+//             return;
+//         }
+//         int snowball = 0;
+//         for (int i = 0; i < nums.length; i++) {
+//             if (nums[i] == 0) {
+//                 snowball++;
+//             } else if (snowball > 0) {
+//                 nums[i - snowball] = nums[i];
+//                 nums[i] = 0;
+//             }
+            
+//         }
+//     }
+// }
+
+/** 
+ * follow up:
+ * 1. how to keep the non zero elements in order? eg.[0,1,12,3,0] -> [1,3,12,0,0]
+ * check the nums[anchor] > nums[anchor - 1], if not, do the swap.
+ * capsulate the swap method, since use twice here  
+ */ 
+
+/*
+ * [11] 盛最多水的容器
+ */
+
+/**
+ * Solution1: Converage. Use two pointers.
+ */
+class Solution {
+    public int maxArea (int[] height) {
+        if (height == null || height.length < 2) {
+            return 0;
+        }
+        int left = 0;
+        int right = height.length - 1;
+        int maxVolume = 0;
+        while (left < right) {
+            int minHeight = height[left] < height[right] ? height[left++] : height[right--];
+            int volume = (right - left + 1) * minHeight;
+            maxVolume = Math.max(volume, maxVolume);
+        }
+        return maxVolume;
+    }
+}
+
+/**
+ * Solution2: Brute Force
+ */
+// class Solution {
+//     public int maxArea (int[] height) {
+//         if (height == null || height.length < 2) {
+//             return 0;
+//         }
+//         int maxArea = 0;
+//         for (int left = 0; left < height.length - 1; left++) {
+//             for (int right = left + 1; right < height.length; right++) {
+//                 int area = Math.min(height[left], height[right]) * (right - left);
+//                 maxArea = Math.max(area, maxArea);
+//             }
+//         }
+//         return maxArea;
+//     }
+// }
